@@ -6,7 +6,7 @@
 /*   By: bchaleil <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 12:37:07 by bchaleil          #+#    #+#             */
-/*   Updated: 2016/03/02 12:46:23 by bchaleil         ###   ########.fr       */
+/*   Updated: 2016/03/02 13:52:13 by bchaleil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,15 @@ int			get_next_line(int const fd, char **line)
 	tmp = (char*)ft_memalloc(sizeof(char) * BUFF_SIZE + 1);
 	ret = read(fd, tmp, BUFF_SIZE);
 	if (ret < 0)
+	{
+		free(tmp);
 		return (-1);
+	}
 	if (r[fd - 1] == NULL)
 		r[fd - 1] = ft_strdup(tmp);
 	else
 		r[fd - 1] = ft_strjoin(r[fd - 1], tmp);
-	if (ret > 0)
-		free(tmp);
+	free(tmp);
 	if (ft_strindexof(r[fd - 1], '\n') == -1 && ret > 0)
 		get_next_line(fd, line);
 	else
