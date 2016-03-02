@@ -1,19 +1,32 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bchaleil <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/03/02 12:45:51 by bchaleil          #+#    #+#             */
+/*   Updated: 2016/03/02 12:48:41 by bchaleil         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line.h"
+#include <stdio.h>
 
 void	ft_readi(int fd)
 {
-	char *line;
-	int r;
+	char	*line;
+	int		r;
 
 	while ((r = get_next_line(fd, &line)) > 0)
 	{
 		printf("r = %d line : |%s|\n", r, line);
 		free(line);
 	}
-		printf("r = %d line : |%s|\n", r, line);
+	printf("r = %d line : |%s|\n", r, line);
 }
 
-int main(int ac, char **av)
+int		main(int ac, char **av)
 {
 	int fd;
 

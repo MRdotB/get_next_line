@@ -6,13 +6,13 @@
 /*   By: bchaleil <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 12:37:07 by bchaleil          #+#    #+#             */
-/*   Updated: 2016/02/29 23:12:30 by bchaleil         ###   ########.fr       */
+/*   Updated: 2016/03/02 12:46:23 by bchaleil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static int	set_next_line(char **txt, int const fd,  char **line)
+static int	set_next_line(char **txt, int const fd, char **line)
 {
 	int		i;
 	char	*temp;
@@ -20,7 +20,7 @@ static int	set_next_line(char **txt, int const fd,  char **line)
 	i = ft_strindexof(txt[fd - 1], '\n');
 	if (i == -1)
 	{
-		if (txt[fd -1][0] != '\0')
+		if (txt[fd - 1][0] != '\0')
 		{
 			*line = ft_strdup(txt[fd - 1]);
 			free(txt[fd - 1]);
@@ -42,12 +42,14 @@ int			get_next_line(int const fd, char **line)
 	char			*tmp;
 	static char		**r = NULL;
 
-	if (fd < 0 || fd > MAX_FILES || line == NULL || *line == NULL)
+	if (fd < 0 || fd > MAX_FILES || line == NULL || BUFF_SIZE < 1)
 		return (-1);
 	if (r == NULL)
 		r = (char**)ft_memalloc(sizeof(char*) * MAX_FILES);
 	tmp = (char*)ft_memalloc(sizeof(char) * BUFF_SIZE + 1);
 	ret = read(fd, tmp, BUFF_SIZE);
+	if (ret < 0)
+		return (-1);
 	if (r[fd - 1] == NULL)
 		r[fd - 1] = ft_strdup(tmp);
 	else
