@@ -6,7 +6,7 @@
 /*   By: bchaleil <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 12:37:07 by bchaleil          #+#    #+#             */
-/*   Updated: 2016/03/02 13:52:13 by bchaleil         ###   ########.fr       */
+/*   Updated: 2016/03/03 15:38:33 by bchaleil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	set_next_line(char **txt, int const fd, char **line)
 			free(txt[fd - 1]);
 			return (1);
 		}
-		*line = ft_strdup("");
+		*line = "";
 		return (0);
 	}
 	*line = ft_strncpy(ft_memalloc(sizeof(char) * i + 1), txt[fd - 1], i - 1);
@@ -39,25 +39,25 @@ static int	set_next_line(char **txt, int const fd, char **line)
 int			get_next_line(int const fd, char **line)
 {
 	int				ret;
-	char			*tmp;
-	static char		**r = NULL;
+	char			tmp[BUFF_SIZE + 1];
+	char			*tmp2;
+	static char		*r[MAX_FILES];
 
-	if (fd < 0 || fd > MAX_FILES || line == NULL || BUFF_SIZE < 1)
+	if (fd < 0 || fd >= MAX_FILES || line == NULL || BUFF_SIZE < 1)
 		return (-1);
-	if (r == NULL)
-		r = (char**)ft_memalloc(sizeof(char*) * MAX_FILES);
-	tmp = (char*)ft_memalloc(sizeof(char) * BUFF_SIZE + 1);
 	ret = read(fd, tmp, BUFF_SIZE);
-	if (ret < 0)
-	{
-		free(tmp);
+	tmp[ret] = '\0';
+	if (ret == -1)
 		return (-1);
-	}
 	if (r[fd - 1] == NULL)
 		r[fd - 1] = ft_strdup(tmp);
 	else
-		r[fd - 1] = ft_strjoin(r[fd - 1], tmp);
-	free(tmp);
+	{
+		tmp2 = ft_strdup(r[fd - 1]);
+		free(r[fd - 1]);
+		r[fd - 1] = ft_strjoin(tmp2, tmp);
+		free(tmp2);
+	}
 	if (ft_strindexof(r[fd - 1], '\n') == -1 && ret > 0)
 		get_next_line(fd, line);
 	else
