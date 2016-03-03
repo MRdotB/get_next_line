@@ -6,7 +6,7 @@
 /*   By: bchaleil <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 12:37:07 by bchaleil          #+#    #+#             */
-/*   Updated: 2016/03/03 15:38:33 by bchaleil         ###   ########.fr       */
+/*   Updated: 2016/03/03 16:08:19 by bchaleil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	set_next_line(char **txt, int const fd, char **line)
 		if (txt[fd - 1][0] != '\0')
 		{
 			*line = ft_strdup(txt[fd - 1]);
-			free(txt[fd - 1]);
+			ft_memdel((void**)&txt[fd - 1]);
 			return (1);
 		}
 		*line = "";
@@ -31,7 +31,7 @@ static int	set_next_line(char **txt, int const fd, char **line)
 	}
 	*line = ft_strncpy(ft_memalloc(sizeof(char) * i + 1), txt[fd - 1], i - 1);
 	temp = ft_strdup(txt[fd - 1] + i);
-	free(txt[fd - 1]);
+	ft_memdel((void**)&txt[fd - 1]);
 	txt[fd - 1] = temp;
 	return (1);
 }
@@ -54,9 +54,9 @@ int			get_next_line(int const fd, char **line)
 	else
 	{
 		tmp2 = ft_strdup(r[fd - 1]);
-		free(r[fd - 1]);
+		ft_memdel((void**)&r[fd - 1]);
 		r[fd - 1] = ft_strjoin(tmp2, tmp);
-		free(tmp2);
+		ft_memdel((void**)&tmp2);
 	}
 	if (ft_strindexof(r[fd - 1], '\n') == -1 && ret > 0)
 		get_next_line(fd, line);
