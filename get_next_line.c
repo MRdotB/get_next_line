@@ -6,7 +6,7 @@
 /*   By: bchaleil <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/18 12:37:07 by bchaleil          #+#    #+#             */
-/*   Updated: 2016/03/03 16:08:19 by bchaleil         ###   ########.fr       */
+/*   Updated: 2016/03/04 16:03:12 by bchaleil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,10 @@ int			get_next_line(int const fd, char **line)
 	char			*tmp2;
 	static char		*r[MAX_FILES];
 
-	if (fd < 0 || fd >= MAX_FILES || line == NULL || BUFF_SIZE < 1)
+	if (fd < 0 || fd >= MAX_FILES || line == NULL || BUFF_SIZE < 1
+			|| (ret = read(fd, tmp, BUFF_SIZE)) == -1)
 		return (-1);
-	ret = read(fd, tmp, BUFF_SIZE);
 	tmp[ret] = '\0';
-	if (ret == -1)
-		return (-1);
 	if (r[fd - 1] == NULL)
 		r[fd - 1] = ft_strdup(tmp);
 	else
