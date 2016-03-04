@@ -6,12 +6,13 @@
 /*   By: bchaleil <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/02 12:45:51 by bchaleil          #+#    #+#             */
-/*   Updated: 2016/03/02 12:48:41 by bchaleil         ###   ########.fr       */
+/*   Updated: 2016/03/04 16:32:32 by bchaleil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <stdio.h>
+#include <fcntl.h>
 
 void	ft_readi(int fd)
 {
